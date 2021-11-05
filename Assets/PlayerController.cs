@@ -23,7 +23,12 @@ public class PlayerController : MonoBehaviour
     {
         float hDirection = Input.GetAxis("Horizontal");
 
+<<<<<<< Updated upstream
         if (hDirection < 0)
+=======
+        // moving left
+        if ( hDirection < 0)
+>>>>>>> Stashed changes
         {
             rb.velocity = new Vector2(-5, rb.velocity.y);
             transform.localScale = new Vector2(-1, 1);
@@ -44,9 +49,14 @@ public class PlayerController : MonoBehaviour
             state = State.jumping;
         }
 
+<<<<<<< Updated upstream
         VelocityState();
         anim.SetInteger("state", (int)state);
 
+=======
+        AnimationState();
+        anim.SetInteger("state", (int)state);
+>>>>>>> Stashed changes
     }
 
     private void VelocityState()
@@ -67,7 +77,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        else if (Mathf.Abs(rb.velocity.x) > 1.5f)
+        else if (Mathf.Abs(rb.velocity.x) > .5f)
         {
             state = State.running;
         }
