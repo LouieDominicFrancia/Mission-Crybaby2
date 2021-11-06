@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 430383270}
   - component: {fileID: 430383272}
   - component: {fileID: 430383271}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25417,8 +25417,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072890cf7e928d246ba273f7ef4c10d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 1393644481}
-  anim: {fileID: 1393644484}
+  ground:
+    serializedVersion: 2
+    m_Bits: 256
+  speed: 5
+  jumpForce: 10
 --- !u!95 &1393644484
 Animator:
   serializedVersion: 3
