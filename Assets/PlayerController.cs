@@ -43,12 +43,18 @@ public class PlayerController : MonoBehaviour
             
         }
 
+<<<<<<< Updated upstream
         if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers())
+=======
+        // jumping
+        if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(ground))
+>>>>>>> Stashed changes
         {
             rb.velocity = new Vector2(rb.velocity.x, 10);
             state = State.jumping;
         }
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         VelocityState();
         anim.SetInteger("state", (int)state);
@@ -56,6 +62,10 @@ public class PlayerController : MonoBehaviour
 =======
         AnimationState();
         anim.SetInteger("state", (int)state);
+>>>>>>> Stashed changes
+=======
+        AnimationState();
+
 >>>>>>> Stashed changes
     }
 
