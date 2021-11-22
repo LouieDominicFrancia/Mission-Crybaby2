@@ -421,6 +421,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 313537316}
   m_CullTransparentMesh: 0
+--- !u!1 &359066949
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 359066950}
+  m_Layer: 0
+  m_Name: L
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &359066950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359066949}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 37.66, y: -1.93, z: -20.93327}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &432845997
 GameObject:
   m_ObjectHideFlags: 0
@@ -734,6 +764,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1299608560}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &534225023
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 534225024}
+  m_Layer: 0
+  m_Name: R
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &534225024
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534225023}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 44.82, y: -1.91, z: -20.93327}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &908284551 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7916806013046954688, guid: 2cc1ce99aea6ba542a25e78803ecf8d1,
@@ -1280,6 +1340,7 @@ GameObject:
   - component: {fileID: 1650515601}
   - component: {fileID: 1650515600}
   - component: {fileID: 1650515603}
+  - component: {fileID: 1650515604}
   m_Layer: 0
   m_Name: Frog
   m_TagString: Enemy
@@ -1371,7 +1432,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1650515599}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40.84, y: -1.31, z: -2.687614}
+  m_LocalPosition: {x: 42.52, y: -0.69, z: -2.687614}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1397,7 +1458,26 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!114 &1650515604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650515599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d2f960c118ceca418a7597bde949783, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftCap: 37.66
+  rightCap: 44.82
+  jumpLength: 3
+  jumpHeight: 5
+  ground:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!4 &1656825944 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7916806013046954688, guid: 2cc1ce99aea6ba542a25e78803ecf8d1,
@@ -1538,7 +1618,7 @@ PrefabInstance:
     - target: {fileID: 2313771919949721106, guid: f9f66287d48a59744af67ae97008b42d,
         type: 3}
       propertyPath: hurtforce
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2313771919949721106, guid: f9f66287d48a59744af67ae97008b42d,
         type: 3}
