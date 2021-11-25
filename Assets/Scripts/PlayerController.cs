@@ -19,10 +19,10 @@ public class PlayerController : MonoBehaviour
     // Inspector variables
     [SerializeField] private LayerMask ground;
     [SerializeField] private float speed = 5f;
-    [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private float jumpForce = 8f;
     [SerializeField] private int cherries = 0;
     [SerializeField] private Text cherryText;
-    [SerializeField] private float hurtforce = 10f;
+    [SerializeField] private float hurtforce = 5f;
 
     private void Start()
     {
@@ -56,9 +56,11 @@ public class PlayerController : MonoBehaviour
     {
         if(other.gameObject.tag == "Enemy")
         {
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+
             if(state == State.falling)
             {
-                Destroy(other.gameObject);
+                enemy.JumpedOn();
                 Jump();
             }
             else
