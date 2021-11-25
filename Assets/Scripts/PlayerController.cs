@@ -56,11 +56,11 @@ public class PlayerController : MonoBehaviour
     {
         if(other.gameObject.tag == "Enemy")
         {
-            Frog frog = other.gameObject.GetComponent<Frog>();
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
 
             if(state == State.falling)
             {
-                frog.JumpedOn();
+                enemy.JumpedOn();
                 Jump();
             }
             else
