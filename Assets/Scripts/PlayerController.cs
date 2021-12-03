@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private Collider2D coll;
-    private AudioSource footstep;
 
 
     // Finite state machine
@@ -24,13 +23,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int cherries = 0;
     [SerializeField] private Text cherryText;
     [SerializeField] private float hurtforce = 5f;
+    [SerializeField] private AudioSource cherry;
+    [SerializeField] private AudioSource footstep;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
-        footstep = GetComponent<AudioSource>();
     }
         
     private void Update()
@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.tag == "Collectable")
         {
+            cherry.Play();
             Destroy(collision.gameObject);
             cherries += 1;
             cherryText.text = cherries.ToString();
@@ -102,7 +103,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // jumping
-        if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers())
+        if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(ground))
         {
             Jump();
         }
