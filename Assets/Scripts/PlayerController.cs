@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class PlayerController : MonoBehaviour
@@ -21,8 +22,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpForce = 8f;
     [SerializeField] private int cherries = 0;
-    [SerializeField] private Text cherryText;
+    [SerializeField] private TextMeshProUGUI cherryText;
     [SerializeField] private float hurtforce = 5f;
+    [SerializeField] private AudioSource cherry;
+    [SerializeField] private AudioSource footstep;
 
     private void Start()
     {
@@ -46,9 +49,17 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.tag == "Collectable")
         {
+            cherry.Play();
             Destroy(collision.gameObject);
             cherries += 1;
             cherryText.text = cherries.ToString();
+        }
+        if(collision.tag == "Powerup")
+        {
+            Destroy(collision.gameObject);
+            jumpForce = 12f;
+            GetComponent<SpriteRenderer>().color = Color.yellow;
+            StartCoroutine(ResetPower());
         }
     }
 
@@ -81,8 +92,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-
     private void Movement()
     {
         float hDirection = Input.GetAxis("Horizontal");
@@ -102,7 +111,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // jumping
-        if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers())
+        if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(ground))
         {
             Jump();
         }
@@ -149,5 +158,17 @@ public class PlayerController : MonoBehaviour
             state = State.idle;
         }
 
+    }
+
+    private void Footstep()
+    {
+        footstep.Play();
+    }
+
+    private IEnumerator ResetPower()
+    {
+        yield return new WaitForSeconds(10);
+        jumpForce = 8;
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
 }
