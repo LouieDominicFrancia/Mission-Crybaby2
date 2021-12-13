@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private Collider2D coll;
+    private bool canMove = true;
 
 
     // Finite state machine
@@ -32,11 +33,12 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
+        canMove = true;
     }
         
     private void Update()
     {
-        if (state != State.hurt)
+        if (canMove && state != State.hurt)
         {
             Movement();
         }
@@ -77,6 +79,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 state = State.hurt;
+
                 if(other.gameObject.transform.position.x > transform.position.x)
                 {
                     //Enemy is to my right therefore I should be damaged and move left
@@ -143,19 +146,23 @@ public class PlayerController : MonoBehaviour
 
         else if (state == State.hurt)
         {
-            if(Mathf.Abs(rb.velocity.x) < .1f)
+            PlayerController moveScript = coll.GetComponent<PlayerController>();
+            moveScript.canMove = false;
+            if (Mathf.Abs(rb.velocity.x) < .0001f)
             {
                 state = State.idle;
             }
         }
 
-        else if (Mathf.Abs(rb.velocity.x) > 1.5f)
+        else if (Mathf.Abs(rb.velocity.x) > 1f)
         {
             state = State.running;
         }
         else
         {
             state = State.idle;
+            PlayerController moveScript = coll.GetComponent<PlayerController>();
+            moveScript.canMove = true;
         }
 
     }
