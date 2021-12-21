@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 
 public class PlayerController : MonoBehaviour
@@ -27,6 +28,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float hurtforce = 5f;
     [SerializeField] private AudioSource cherry;
     [SerializeField] private AudioSource footstep;
+    [SerializeField] private int health;
+    [SerializeField] private Text HealthAmount;
 
     private void Start()
     {
@@ -34,8 +37,10 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
         canMove = true;
+        HealthAmount.text = health.ToString();
     }
-        
+    
+    // enables player to move/ screen update per frame
     private void Update()
     {
         if (canMove && state != State.hurt)
@@ -47,6 +52,8 @@ public class PlayerController : MonoBehaviour
 
     }
 
+
+    // Game collectibles interactions
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Collectable")
@@ -65,6 +72,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Enemy interactions
     private void OnCollisionEnter2D(Collision2D other)
     {
         if(other.gameObject.tag == "Enemy")
@@ -79,6 +87,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 state = State.hurt;
+                HandlingHealth();
 
                 if(other.gameObject.transform.position.x > transform.position.x)
                 {
@@ -95,6 +104,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void HandlingHealth()
+    {
+        health -= 1;
+        HealthAmount.text = health.ToString();
+        
+        if (health <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+
+
+    // Player movement
     private void Movement()
     {
         float hDirection = Input.GetAxis("Horizontal");
@@ -126,6 +148,7 @@ public class PlayerController : MonoBehaviour
         state = State.jumping;
     }
 
+    // Animation states updator
     private void AnimationState()
     {
         if (state == State.jumping)
@@ -167,11 +190,13 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    // Sound effect(player)
     private void Footstep()
     {
         footstep.Play();
     }
 
+    // Powerup setting design
     private IEnumerator ResetPower()
     {
         yield return new WaitForSeconds(10);
