@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 
 public class PlayerController : MonoBehaviour
@@ -26,12 +27,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float hurtforce = 5f;
     [SerializeField] private AudioSource cherry;
     [SerializeField] private AudioSource footstep;
+    [SerializeField] private int health;
+    [SerializeField] private Text healthAmount;
+
+
+
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
+        healthAmount.text = health.ToString();
     }
         
     private void Update()
@@ -77,7 +84,8 @@ public class PlayerController : MonoBehaviour
             else
             {
                 state = State.hurt;
-                if(other.gameObject.transform.position.x > transform.position.x)
+                HandleHealth(); //Deals with health, updatating ui, and will reset level if health is <= 0
+                if (other.gameObject.transform.position.x > transform.position.x)
                 {
                     //Enemy is to my right therefore I should be damaged and move left
                     rb.velocity = new Vector2(-hurtforce, rb.velocity.y);
@@ -88,7 +96,17 @@ public class PlayerController : MonoBehaviour
                     rb.velocity = new Vector2(hurtforce, rb.velocity.y);
                 }
             }
-            
+
+        }
+    }
+
+    private void HandleHealth()
+    {
+        health -= 1;
+        healthAmount.text = health.ToString();
+        if (health <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
