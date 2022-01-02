@@ -11,6 +11,16 @@ public class Fall : MonoBehaviour
         {
             PermanentUI.perm.Reset();
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+            PermanentUI.perm.health -= 1;
+            PermanentUI.perm.HealthAmount.text = PermanentUI.perm.health.ToString();
+
+            if (PermanentUI.perm.health <= 0)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
         }
     }
+
+
 }
