@@ -14,13 +14,6 @@ public class PlayerController : MonoBehaviour
     private Collider2D coll;
     private CapsuleCollider2D cc;
     private bool canMove = true;
-    private float slopeDownAngle;
-    private float slopeDownAngleOld;
-    private float slopeSideAngle;
-    private bool isOnSlope;
-
-    private Vector2 collidersize;
-    private Vector2 slopeNormalPerp;
 
     // Finite state machine
     private enum State {idle, running, jumping, falling, hurt}
@@ -34,9 +27,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float hurtforce = 5f;
     [SerializeField] private AudioSource cherry;
     [SerializeField] private AudioSource footstep;
-    [SerializeField] private float slopeCheckDistance;
-    [SerializeField] private PhysicsMaterial2D noFriction;
-    [SerializeField] private PhysicsMaterial2D fullFriction;
 
 
   private void Start()
@@ -44,12 +34,10 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
-        cc = GetComponent<CapsuleCollider2D>();
 
         canMove = true;
         PermanentUI.perm.HealthAmount.text = PermanentUI.perm.health.ToString();
 
-        collidersize = cc.size;
     }
     
     // enables player to move/ screen update per frame
@@ -62,72 +50,10 @@ public class PlayerController : MonoBehaviour
         AnimationState();
         anim.SetInteger("state", (int)state); // Sets animation based on enumeration state
 
-        SlopeChecker();
     }
 
 
-    // Smoothness of player movement on slopes
-    private void SlopeChecker()
-    {
-        Vector2 checkLoc = transform.position - new Vector3(0.0f, collidersize.y / 2);
 
-        SlopeCheckerVertical(checkLoc);
-        SlopeCheckerHorizontal(checkLoc);
-    }
-
-    private void SlopeCheckerHorizontal(Vector2 checkLoc)
-    {
-        RaycastHit2D slopeHitFront = Physics2D.Raycast(checkLoc, transform.right , slopeCheckDistance, ground);
-        RaycastHit2D slopeHitBack = Physics2D.Raycast(checkLoc, -transform.right, slopeCheckDistance, ground);
-    
-
-        if (slopeHitFront)
-        {
-            isOnSlope = true;
-            slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
-        }
-        else if (slopeHitBack)
-        {
-            isOnSlope = true;
-            slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
-        }
-        else
-        {
-            slopeSideAngle = 0.0f;
-            isOnSlope = false;
-        }
-    }
-
-    private void SlopeCheckerVertical(Vector2 checkLoc)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(checkLoc, Vector2.down, slopeCheckDistance, ground);
-
-        if (hit)
-        {
-            slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
-
-            slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
-
-            if ( slopeDownAngle != slopeDownAngleOld)
-            {
-                isOnSlope = true;
-            }
-
-            slopeDownAngleOld = slopeDownAngle;
-
-            Debug.DrawRay(hit.point, slopeNormalPerp);
-            Debug.DrawRay(hit.point, hit.normal);
-        }
-
-        if (isOnSlope && state == State.idle)
-        {
-            rb.sharedMaterial = fullFriction;
-        }
-        else if (!isOnSlope)
-        {
-            rb.sharedMaterial = noFriction;
-        }
-    }
 
     // Game collectibles interactions
     private void OnTriggerEnter2D(Collider2D collision)
