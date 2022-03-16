@@ -12,14 +12,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private Collider2D coll;
-    private CapsuleCollider2D cc;
     private bool canMove = true;
 
     // Finite state machine
     private enum State {idle, running, jumping, falling, hurt}
     private State state = State.idle;
 
-    
     // Inspector variables
     [SerializeField] private LayerMask ground;
     [SerializeField] private float speed = 5f;
@@ -36,13 +34,15 @@ public class PlayerController : MonoBehaviour
         coll = GetComponent<Collider2D>();
 
         canMove = true;
-        PermanentUI.perm.HealthAmount.text = PermanentUI.perm.health.ToString();
+        
 
     }
     
     // enables player to move/ screen update per frame
     private void Update()
     {
+        PermanentUI.perm.HealthAmount.text = PermanentUI.perm.health.ToString();
+
         if (canMove && state != State.hurt)
         {
             Movement();
@@ -51,9 +51,6 @@ public class PlayerController : MonoBehaviour
         anim.SetInteger("state", (int)state); // Sets animation based on enumeration state
 
     }
-
-
-
 
     // Game collectibles interactions
     private void OnTriggerEnter2D(Collider2D collision)
@@ -73,6 +70,7 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(ResetPower());
         }
     }
+
 
     // Enemy interactions
     private void OnCollisionEnter2D(Collision2D other)
@@ -113,7 +111,7 @@ public class PlayerController : MonoBehaviour
         
         if (PermanentUI.perm.health <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene("TheEnd");
         }
     }
 
@@ -122,6 +120,7 @@ public class PlayerController : MonoBehaviour
     private void Movement()
     {
         float hDirection = Input.GetAxis("Horizontal");
+        float vDirection = Input.GetAxis("Vertical");
 
         // moving left
         if (hDirection < 0)
@@ -141,6 +140,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(ground))
         {
             Jump();
+
+        }
+        
+        if (vDirection < 0 || vDirection > 0 && state == State.jumping)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, -5f);
         }
     }
 

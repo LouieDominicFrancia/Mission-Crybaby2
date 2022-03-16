@@ -17,7 +17,7 @@ public class Fall : MonoBehaviour
 
             if (PermanentUI.perm.health <= 0)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                SceneManager.LoadScene("TheEnd");
             }
         }
     }
