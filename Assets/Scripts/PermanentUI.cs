@@ -8,7 +8,7 @@ public class PermanentUI : MonoBehaviour
 {
     public int cherries = 0;
     public int health; 
-    public TextMeshProUGUI cherryText;1114
+    public TextMeshProUGUI cherryText;
     public Text HealthAmount;
 
     public static PermanentUI perm;
