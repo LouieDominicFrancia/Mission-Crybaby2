@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioSource footstep;
     [SerializeField] private AudioSource gem;
     [SerializeField] private AudioSource gemEnd;
+    [SerializeField] private AudioSource jump;
 
     
 
@@ -155,6 +156,7 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
+        jump.Play();
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         state = State.jumping;
     }
