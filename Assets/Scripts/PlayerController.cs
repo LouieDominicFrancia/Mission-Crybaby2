@@ -25,7 +25,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float hurtforce = 5f;
     [SerializeField] private AudioSource cherry;
     [SerializeField] private AudioSource footstep;
+    [SerializeField] private AudioSource gem;
+    [SerializeField] private AudioSource gemEnd;
 
+    
 
   private void Start()
     {
@@ -64,6 +67,7 @@ public class PlayerController : MonoBehaviour
         }
         if(collision.tag == "Powerup")
         {
+            gem.Play();
             Destroy(collision.gameObject);
             jumpForce = 12f;
             GetComponent<SpriteRenderer>().color = Color.yellow;
@@ -209,5 +213,6 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(10);
         jumpForce = 8;
         GetComponent<SpriteRenderer>().color = Color.white;
+        gemEnd.Play();
     }
 }
