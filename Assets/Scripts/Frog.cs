@@ -13,7 +13,7 @@ public class Frog : Enemy
     [SerializeField] private LayerMask ground;
 
     private Collider2D coll;
-    private Rigidbody2D rb;
+    private Rigidbody2D rbFrog;
 
     private bool facingLeft = true;
 
@@ -22,7 +22,7 @@ public class Frog : Enemy
     {
         base.Start();
         coll = GetComponent<Collider2D>();
-        rb = GetComponent<Rigidbody2D>();
+        rbFrog = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -30,7 +30,7 @@ public class Frog : Enemy
         //transition from jump to fall
         if(anim.GetBool("Jumping"))
         {
-            if(rb.velocity.y < -1)
+            if(rbFrog.velocity.y < -1)
             {
                 anim.SetBool("Falling", true);
                 anim.SetBool("Jumping", false);
@@ -58,7 +58,7 @@ public class Frog : Enemy
 
                 if (coll.IsTouchingLayers(ground))
                 {
-                    rb.velocity = new Vector2(-jumpLength, jumpHeight);
+                    rbFrog.velocity = new Vector2(-jumpLength, jumpHeight);
                     anim.SetBool("Jumping", true);
                 }
             }
@@ -78,7 +78,7 @@ public class Frog : Enemy
 
                 if (coll.IsTouchingLayers(ground))
                 {
-                    rb.velocity = new Vector2(jumpLength, jumpHeight);
+                    rbFrog.velocity = new Vector2(jumpLength, jumpHeight);
                     anim.SetBool("Jumping", true);
                 }
             }
